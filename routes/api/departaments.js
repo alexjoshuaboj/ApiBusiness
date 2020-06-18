@@ -7,7 +7,7 @@ const departaments = require('../../models/departaments')
 
 router.get('/', async (req, res) => {
     try {
-        const result = await departaments.recoverAllEmployees();
+        const result = await departaments.recoverAllDepartaments();
         res.json(result);
     } catch (err) {
         res.json({
@@ -18,12 +18,13 @@ router.get('/', async (req, res) => {
 /**
  * create any departament
  */
-router.post('/create', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const result = await departaments.createDepartments(req.body);
+        const result = await departaments.createDepartaments(req.body);
         if (result['affectedRows'] === 1) {
             res.json({
-                success: "Departamento agregado"
+                success: "Departament create",
+                json: req.body
             })
         }
     } catch (err) {
@@ -36,13 +37,13 @@ router.post('/create', async (req, res) => {
 /**
  * update departaments
  */
-router.post('/update', async (req, res) => {
+router.put('/:idDepartament', async (req, res) => {
     try {
-        const result = await Departamentos.updateDepartment(req.body, req.body.idDepartamento);
+        const result = await departaments.updateDepartament(req.body, req.params.idDepartament);
         if (result['affectedRows'] === 1) {
             res.json({
-                success: "Departamento modificado"
-            })
+                success: `Departament with id ${req.params.idDepartament} is edit`
+            });
         }
     } catch (err) {
         res.json({
@@ -54,10 +55,14 @@ router.post('/update', async (req, res) => {
 /**
  * remove departaments
  */
-router.get('/delete/:idDepartamento', async (req, res) => {
+router.delete('/:idDepartament', async (req, res) => {
     try {
-        const result = await departaments.deleteById(req.params.idDepartamento);
-        res.json(result);
+        const result = await departaments.deleteDepartament(req.params.idDepartament);
+        if (result['affectedRows'] === 1) {
+            res.json({
+                success: `Departament with id ${req.params.idDepartament} is delete`
+            });
+        }
     } catch (err) {
         res.json({
             error: err.message

@@ -1,6 +1,6 @@
-const recoverAllEmployees = () => {
+const recoverAllDepartaments = () => {
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM departamento', (err, rows) => {
+        db.query('SELECT * FROM empresa.departamento', (err, rows) => {
             if (err) reject(err)
             resolve(rows);
         });
@@ -15,7 +15,7 @@ const createDepartaments = (
     }
 ) => {
     return new Promise((resolve, reject) => {
-        db.query('INSERT INTO departamento (nombre, ciudad) values (?, ?)',
+        db.query('INSERT INTO empresa.departamento (nombre, ciudad) values (?, ?)',
             [nombre, ciudad],
             (err, result) => {
                 if (err) reject(err);
@@ -25,23 +25,17 @@ const createDepartaments = (
 
 };
 
-// GET ID 
-
-const getById = (pDepartamentoId) => {
-    return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM departamento WHERE id = ?', [pDepartamentoId], (err, rows) => {
-            if (err) reject(err);
-            if (rows.length !== 1) reject(err.message);
-            resolve(rows[0]);
-        })
-    });
-};
-
-const updateById = (pDepartamentoId, { nombre, ciudad }) => {
+const updateDepartament = (
+    {
+        nombre,
+        ciudad
+    },
+    pIdDepartament
+) => {
     return new Promise((resolve, reject) => {
         db.query(
-            'update clientes set nombre = ?, ciudad = ? where id = ?',
-            [nombre, ciudad, pDepartamentoId],
+            'UPDATE departamento SET nombre = ?, ciudad = ? WHERE id = ?',
+            [nombre, ciudad, pIdDepartament],
             (err, result) => {
                 if (err) reject(err);
                 resolve(result);
@@ -49,9 +43,9 @@ const updateById = (pDepartamentoId, { nombre, ciudad }) => {
     });
 };
 
-const deleteById = (pId) => {
+const deleteDepartament = (pId) => {
     return new Promise((resolve, reject) => {
-        db.query('DELETE FROM departamento WHERE id = ?', [pId], (err, result) => {
+        db.query('DELETE departamento FROM empresa.departamento WHERE id = ?', [pId], (err, result) => {
             if (err) reject(err);
             resolve(result);
         });
@@ -61,9 +55,8 @@ const deleteById = (pId) => {
 
 
 module.exports = {
-    recoverAllEmployees,
+    recoverAllDepartaments,
     createDepartaments,
-    getById,
-    deleteById,
-    updateById
+    updateDepartament,
+    deleteDepartament
 }

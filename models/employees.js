@@ -11,13 +11,13 @@ const createEmployee = ({
     nombre,
     dni,
     sexo,
-    fecha_nacimiento,
+    fecha_nac,
     salario,
     cargo,
     fk_departamento
 }) => {
     return new Promise((resolve, reject) => {
-        db.query('INSERT INTO empresa.empleados (nombre, dni, sexo, fecha_nac, salario, cargo, fk_departamento )value (?, ?, ?, ?, ?, ?, ? )', [nombre, dni, sexo, fecha_nacimiento, salario, cargo, fk_departamento], (err, result) => {
+        db.query('INSERT INTO empresa.empleados (nombre, dni, sexo, fecha_nac, salario, cargo, fk_departamento )value (?, ?, ?, ?, ?, ?, ? )', [nombre, dni, sexo, fecha_nac, salario, cargo, fk_departamento], (err, result) => {
             if (err) reject(err);
             resolve(result);
         })
@@ -29,7 +29,7 @@ const updateEmployee = (
         nombre,
         dni,
         sexo,
-        fecha_nacimiento,
+        fecha_nac,
         salario,
         cargo,
         fk_departamento,
@@ -37,7 +37,7 @@ const updateEmployee = (
     idEmployee
 ) => {
     return new Promise((resolve, reject) => {
-        db.query('UPDATE empresa.empleados SET nombre = ?, dni = ?, sexo = ?, fecha_nacimiento = ?, salario = ?, cargo = ?, fk_departamento = ? WHERE id = ?', [nombre, dni, sexo, fecha_nacimiento, salario, cargo, fk_departamento, idEmployee], (err, result) => {
+        db.query('UPDATE empresa.empleados SET nombre = ?, dni = ?, sexo = ?, fecha_nac = ?, salario = ?, cargo = ?, fk_departamento = ? WHERE id = ?', [nombre, dni, sexo, fecha_nac, salario, cargo, fk_departamento, idEmployee], (err, result) => {
             if (err) reject(err);
             resolve(result);
         })
